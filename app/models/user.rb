@@ -1,8 +1,13 @@
 class User < ApplicationRecord
     has_many :microposts, dependent: :destroy
-    attr_accessor :remember_token, :activation_token
     attr_accessor :remember_token, :activation_token, :reset_token
   
+
+    scope :get_all, -> { where(:activated => true) }
+    
+    before_save :downcase_email
+    before_create :create_activation_digest
+
     before_save { self.email = email.downcase }
     before_create :create_activation_digest
     VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -59,7 +64,13 @@ class User < ApplicationRecord
       Micropost.where("user_id = ?", id)
     end
   
+    def activate
+        update_columns(activated: true, activated_at: Time.now)
+    end
 
+    def send_activation_email
+        UserMailer.account_activation(self).deliver_now
+    end
 
     private
     # Converts email to all lowercase.
@@ -71,5 +82,4 @@ class User < ApplicationRecord
             self.activation_token = User.new_token
             self.activation_digest = User.digest(activation_token)
         end
-
 end

@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.where(activated: true).paginate(page: params[:page], per_page: 3)
+    @users = User.get_all.paginate(page: params[:page], per_page: 3)
   end
   
   def show
