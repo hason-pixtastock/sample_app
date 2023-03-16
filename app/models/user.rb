@@ -4,9 +4,14 @@ class User < ApplicationRecord
     has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
     has_many :following, through: :active_relationships, source: :followed
     has_many :followers, through: :passive_relationships, source: :follower
-    attr_accessor :remember_token, :activation_token
     attr_accessor :remember_token, :activation_token, :reset_token
   
+
+    scope :get_all, -> { where(:activated => true) }
+    
+    before_save :downcase_email
+    before_create :create_activation_digest
+
     before_save { self.email = email.downcase }
     before_create :create_activation_digest
     VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -83,6 +88,12 @@ class User < ApplicationRecord
     # Returns true if the current user is following the other user.
     def following?(other_user)
       following.include?(other_user)
+    def activate
+        update_columns(activated: true, activated_at: Time.now)
+    end
+
+    def send_activation_email
+        UserMailer.account_activation(self).deliver_now
     end
 
     private
@@ -95,5 +106,4 @@ class User < ApplicationRecord
             self.activation_token = User.new_token
             self.activation_digest = User.digest(activation_token)
         end
-
 end
