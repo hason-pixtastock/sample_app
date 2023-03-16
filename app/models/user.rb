@@ -1,5 +1,8 @@
 class User < ApplicationRecord
     attr_accessor :remember_token, :activation_token
+
+    scope :get_all, -> { where(:activated => true) }
+    
     before_save :downcase_email
     before_create :create_activation_digest
 

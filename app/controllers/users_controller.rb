@@ -2,13 +2,14 @@ class UsersController < ApplicationController
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: :destroy
+  
 
   def new
     @user = User.new
   end
 
   def index
-    @users = User.where(activated: true).paginate(page: params[:page], per_page: 3)
+    @users = User.get_all.paginate(page: params[:page], per_page: 3)
   end
 
   def show
