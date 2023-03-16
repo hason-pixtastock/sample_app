@@ -1,7 +1,5 @@
 class ApplicationController < ActionController::Base
     before_action :set_locale
-    before_action :logged_in_user, only: [:edit, :update]
-    before_action :correct_user, only: [:edit, :update]
 
     def set_locale
         I18n.locale = params[:locale] || I18n.default_locale
@@ -14,7 +12,7 @@ class ApplicationController < ActionController::Base
     def logged_in_user
         unless logged_in?
             store_location
-            flash[:danger] = "Please log in."
+            flash[:danger] = t("log_in_required_noti")
             redirect_to login_url
         end
     end

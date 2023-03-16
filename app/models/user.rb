@@ -17,19 +17,23 @@ class User < ApplicationRecord
     def User.new_token 
       SecureRandom.urlsafe_base64(32)
     end
+    
     def remember 
       self.remember_token = User.new_token
       update_attribute(:remember_digest, User.digest(remember_token))
     end
+
+
     def authenticated?(attribute, token)
-      digest = send("#{attribute}_digest")
-      return false if digest.nil?
-      
-      BCrypt::Password.new(digest).is_password?(token)
+        digest = send("#{attribute}_digest")
+        return false if digest.nil?
+        BCrypt::Password.new(digest).is_password?(token)
     end
+    
     def forget
       update_attribute(:remember_digest, nil)
     end
+    
     def create_activation_digest
       self.activation_token = User.new_token
       self.activation_digest = User.digest(activation_token)
@@ -49,4 +53,18 @@ class User < ApplicationRecord
       reset_sent_at < 2.hours.ago
     end
   
-  end
+
+
+    private
+    # Converts email to all lowercase.
+        def downcase_email
+            self.email = email.downcase
+        end
+    # Creates and assigns the activation token and digest.
+        def create_activation_digest
+            self.activation_token = User.new_token
+            self.activation_digest = User.digest(activation_token)
+        end
+
+end
+
