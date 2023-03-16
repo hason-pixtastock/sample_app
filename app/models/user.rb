@@ -88,6 +88,8 @@ class User < ApplicationRecord
     # Returns true if the current user is following the other user.
     def following?(other_user)
       following.include?(other_user)
+    end
+    
     def activate
         update_columns(activated: true, activated_at: Time.now)
     end
