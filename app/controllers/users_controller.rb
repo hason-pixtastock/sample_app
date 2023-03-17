@@ -52,6 +52,9 @@ class UsersController < ApplicationController
     else
       render :edit
     end
+    
+  def edit
+    @user = User.find(params[:id])
   end
 
   def destroy
@@ -59,6 +62,7 @@ class UsersController < ApplicationController
     flash[:success] = t(".destroy_user_noti")
     redirect_to users_url
   end
+
 
   private
     def user_params

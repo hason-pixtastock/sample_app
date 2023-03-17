@@ -16,10 +16,9 @@
         <%= render 'follow_form' if logged_in? %>
         <% if @user.microposts.any? %>
         <h3></a>Microposts (<%= @user.microposts.count %>)</h3>
-        <ol class="microposts">
-            <%= render @user.microposts %>
-        </ol>
-        
+            <ol class="microposts">
+                <%= render @user.microposts %>
+            </ol>
         <% end %>
     </div>
 </div>
