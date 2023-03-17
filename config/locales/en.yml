@@ -105,6 +105,14 @@ en:
   flash: 
     sign_up_success: Welcome to the Sample App!
 
+  password_resets:
+    create:
+      reset_email_sent_noti: Email sent with password reset instructions
+      email_not_found_noti: Email address not found
+    update:
+      can_not_empty_noti: Can not be empty
+      reset_pass_success_noti: Password has been reset.
+
   sessions: 
     new: 
       title: Log in
