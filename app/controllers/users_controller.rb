@@ -1,8 +1,7 @@
 class UsersController < ApplicationController
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update]
-  before_action :admin_user, only: :destroy
-  
+  before_action :admin_user, only: [:destroy]
 
   def new
     @user = User.new
@@ -13,8 +12,10 @@ class UsersController < ApplicationController
   end
   
   def show
-    user_id = params[:id]
-    @user = User.find_by(id: user_id)
+    @user = User.find_by(id: params[:id])
+    if @user.nil?
+      flash[:notice] = "User not found"
+    end
   end
   
   def create

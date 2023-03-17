@@ -98,6 +98,12 @@ en:
     destroy: 
       destroy_user_noti: User deleted
   
+  microposts: 
+    create:
+      create_micro_success_noti: Micropost created!
+    destroy:
+      destroy_micro_success_noti: Micropost deleted!
+  
   account_activations: 
     edit:
       account_activated_noti: Account activated!
