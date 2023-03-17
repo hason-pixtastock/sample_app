@@ -2,7 +2,7 @@
 class UserMailerPreview < ActionMailer::Preview
   # Preview this email at http://localhost:3000/rails/mailers/user_mailer/account_activation
   def account_activation
-    user = User.first
+    user = User.second
     user.activation_token = User.new_token
     user.update_attribute(:activation_digest, User.digest(user.activation_token))
     UserMailer.account_activation(user)
