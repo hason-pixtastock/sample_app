@@ -34,6 +34,7 @@ en:
   general_page_title: "Ruby on Rails Tutorial Sample App"
   profile_page_title: Profile
   setting_page_title: Settings
+  log_in_required_noti: Please Log In!
   
   static_pages: 
     home:
@@ -81,6 +82,8 @@ en:
       title: Signup
       signup_page_description: This will be a signup page for new users.
       create_account_button_text: Create my account
+    create: 
+      check_email_activation_noti: Please check your email to activate your account
     show: 
       title: User profile
     index:
@@ -90,7 +93,15 @@ en:
       change_ava_text: Change
       edit_button_text: Save changes
       update_profile_text: Update your profile
+    update:
+      update_user_noti: User updated
+    destroy: 
+      destroy_user_noti: User deleted
   
+  account_activations: 
+    edit:
+      account_activated_noti: Account activated!
+      activate_failed_noti: Invalid activation link
   flash: 
     sign_up_success: Welcome to the Sample App!
 
@@ -103,3 +114,7 @@ en:
       remember_me_text: Remember me on this computer
     destroy:
       title: Log out
+    create:
+      account_not_activated_noti: Account not activated. Check your email for the activation link
+      login_failed_noti: Invalid email/password combination
+
